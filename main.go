@@ -45,14 +45,6 @@ type User struct {
 	Email     string `json:"email"`
 	Password  string `json:"password,omitempty"`
 }
-type AppError struct {
-	Status  int    `json:"status"`
-	Message string `json:"error_message,omitempty"`
-}
-
-func NewAppError(status int, message string) *AppError {
-	return &AppError{status, message}
-}
 
 func init() {
 	var err error
