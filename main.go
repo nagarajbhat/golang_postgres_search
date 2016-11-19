@@ -40,7 +40,6 @@ type Model struct {
 
 type User struct {
 	Model
-	Username  string `json:"username"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 	Email     string `json:"email"`
@@ -76,7 +75,15 @@ func main() {
 //populate the db
 func Populate(w http.ResponseWriter, r *http.Request) {
 	applicants := []Applicant{
-		{Candidate: &User{Username: "Test", FirstName: "Test2", LastName: "Test3", Email: "test@gmail.com"}, Status: "Processed"},
+		{Candidate: &User{Email: "jedi@aircto.com", Password: "secret.", FirstName: "Jedi", LastName: "Yoda"}, Status: "Processed"},
+		{Candidate: &User{Email: "chandler@launchyard.com", Password: "secret.", FirstName: "Chandler", LastName: "Bing"}, Status: "Processing"},
+		{Candidate: &User{Email: "leonard@launchyard.com", Password: "secret.", FirstName: "Leonard", LastName: "hoff"}, Status: "Processed"},
+		{Candidate: &User{Email: "ross@launchyard.com", Password: "secret.", FirstName: "Ross", LastName: "Geller"}, Status: "Processing"},
+		{Candidate: &User{Email: "superman@marvel.com", Password: "secret.", FirstName: "Clark", LastName: "Kent"}, Status: "Processed"},
+		{Candidate: &User{Email: "batman@dc.com", Password: "secret.", FirstName: "Bruce", LastName: "Wayne"}, Status: "Processed"},
+		{Candidate: &User{Email: "monica@friends.com", Password: "secret.", FirstName: "Monica", LastName: "Geller"}, Status: "Processing"},
+		{Candidate: &User{Email: "rachael@friends.com", Password: "secret.", FirstName: "Rachael", LastName: "Green"}, Status: "Processed"},
+		{Candidate: &User{Email: "joey@friends.com", Password: "secret.", FirstName: "Joey", LastName: "Tribbiani"}, Status: "Processed"},
 	}
 	for i := range applicants {
 		if err := db.Save(&applicants[i]).Error; err != nil {
@@ -94,8 +101,6 @@ func Teardown(w http.ResponseWriter, r *http.Request) {
 func Search(w http.ResponseWriter, r *http.Request) {
 	params := r.URL.Query()
 	q := params.Get("q")
-	//	result, err := Store.Applicant().Search(q)
-
 	var qlist []string
 	qlist = strings.Fields(q)
 	for i := range qlist {
